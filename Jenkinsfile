@@ -8,8 +8,8 @@ pipeline {
             steps {
 		    /*please specify repo, credentialsId, account and sha valuesSUCCESS*/
                 //githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_github_user_password', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
-                updateGithubCommitStatus('build','PENDING')
-		updateGithubCommitStatus('codecov','PENDING')
+                setBuildStatus('build','PENDING')
+		setBuildStatus('codecov','PENDING')
 		updateGithubCommitStatus('test','PENDING')
 		updateGithubCommitStatus('deploy','PENDING')    
 		    
@@ -19,6 +19,17 @@ pipeline {
         }
     }
 }	
+
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: getRepoURL],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
 def getRepoURL() {
   sh "git config --get remote.origin.url > .git/remote-url"
   return readFile(".git/remote-url").trim()
