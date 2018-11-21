@@ -8,7 +8,7 @@ pipeline {
             steps {
 		    /*please specify repo, credentialsId, account and sha valuesSUCCESS*/
                 //githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_github_user_password', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
-                updateGithubCommitStatus(currentBuild)
+                updateGithubCommitStatus('test','PENDING')
 		    
 	    }
         }
@@ -24,7 +24,7 @@ def getCommitSha() {
   return readFile(".git/current-commit").trim()
 }
  
-def updateGithubCommitStatus(build) {
+def updateGithubCommitStatus(String message, String state) {
   // workaround https://issues.jenkins-ci.org/browse/JENKINS-38674
   repoUrl = getRepoURL()
   commitSha = getCommitSha()
@@ -34,13 +34,6 @@ def updateGithubCommitStatus(build) {
 	reposSource: [$class: "ManuallyEnteredRepositorySource", url: repoUrl],
 	commitShaSource: [$class: "ManuallyEnteredShaSource", sha: commitSha],
 	errorHandlers: [[$class: 'ShallowAnyErrorHandler']],
-	statusResultSource: [
-	  $class: 'ConditionalStatusResultSource',
-	  results: [
-		[$class: 'BetterThanOrEqualBuildResult', result: 'SUCCESS', state: 'SUCCESS', message: build.description],
-		[$class: 'BetterThanOrEqualBuildResult', result: 'FAILURE', state: 'FAILURE', message: build.description],
-		[$class: 'AnyBuildResult', state: 'FAILURE', message: 'Loophole']
-	  ]
-	]
+	statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
   ])
 }
