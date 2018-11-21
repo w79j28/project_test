@@ -10,11 +10,8 @@ pipeline {
                 //githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_github_user_password', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
                 setBuildStatus('build','PENDING')
 		setBuildStatus('codecov','PENDING')
-		updateGithubCommitStatus('test','PENDING')
-		updateGithubCommitStatus('deploy','PENDING')    
-		    
-		    
-		    
+		sleep 20
+		setBuildStatus('build','SUCCESS')
 	    }
         }
     }
@@ -49,6 +46,7 @@ void setBuildStatus(String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
       reposSource: [$class: "ManuallyEnteredRepositorySource", url: getRepoURL()],
+      commitShaSource: [$class: "ManuallyEnteredShaSource", sha: commitSha],	  
       contextSource: [$class: "ManuallyEnteredCommitContextSource", context: message],
       errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
       statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
