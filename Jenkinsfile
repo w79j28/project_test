@@ -7,7 +7,7 @@ pipeline {
         stage('Start') {
             steps {
 		    /*please specify repo, credentialsId, account and sha valuesSUCCESS*/
-                githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_token', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
+                githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_github_user_password', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
             }
         }
     }
