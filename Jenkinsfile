@@ -6,7 +6,8 @@ pipeline {
     stages {
         stage('Start') {
             steps {
-                githubNotify description: 'This is a shorted example',  status: 'SUCCESS'
+		    /*please specify repo, credentialsId, account and sha values*/
+                githubNotify  repo: getRepoURL(), sha: getCommitSha(),  status: 'SUCCESS'
             }
         }
     }
