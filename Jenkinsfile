@@ -8,7 +8,12 @@ pipeline {
             steps {
 		    /*please specify repo, credentialsId, account and sha valuesSUCCESS*/
                 //githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_github_user_password', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
-                updateGithubCommitStatus('test','PENDING')
+                updateGithubCommitStatus('build','PENDING')
+		updateGithubCommitStatus('codecov','PENDING')
+		updateGithubCommitStatus('test','PENDING')
+		updateGithubCommitStatus('deploy','PENDING')    
+		    
+		    
 		    
 	    }
         }
