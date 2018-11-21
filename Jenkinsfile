@@ -1,7 +1,15 @@
 pipeline {
     agent any
 	
+    
 	
+    stages {
+        stage('Start') {
+            steps {
+                githubNotify description: 'This is a shorted example',  status: 'SUCCESS'
+            }
+        }
+    }
 }	
 def getRepoURL() {
   sh "git config --get remote.origin.url > .git/remote-url"
