@@ -9,7 +9,7 @@ pipeline {
                 //githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_github_user_password', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
                 setBuildStatus('jenkins:build', 'building','PENDING')
 		setBuildStatus('jenkins:codecov','codecov','PENDING')
-		sleep 20
+		sleep 10
 		setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')
 	    }
         }
