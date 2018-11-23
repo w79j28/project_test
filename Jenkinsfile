@@ -4,6 +4,7 @@ pipeline {
    
     stages {
         stage('Start') {
+	    when { changeRequest target: 'master' }
             steps {
 	        echo "BRANCH_NAME:${BRANCH_NAME}"
 		    /*please specify repo, credentialsId, account and sha valuesSUCCESS*/
