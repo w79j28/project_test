@@ -1,17 +1,15 @@
+properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any
-    triggers {}	
-    
-	
     stages {
         stage('Start') {
             steps {
 		    /*please specify repo, credentialsId, account and sha valuesSUCCESS*/
                 //githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_github_user_password', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
-                setBuildStatus('build','PENDING')
-		setBuildStatus('codecov','PENDING')
+                setBuildStatus('jenkins:build', 'building','PENDING')
+		setBuildStatus('jenkins:codecov','codecov','PENDING')
 		sleep 20
-		setBuildStatus('build','SUCCESS')
+		setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')
 	    }
         }
     }
@@ -42,12 +40,12 @@ def updateGithubCommitStatus(String message, String state) {
 	statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
   ])
 }
-void setBuildStatus(String message, String state) {
+void setBuildStatus(String title, String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
       reposSource: [$class: "ManuallyEnteredRepositorySource", url: getRepoURL()],
       commitShaSource: [$class: "ManuallyEnteredShaSource", sha: commitSha],	  
-      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: message],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: title],
       errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
       statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
   ]);
