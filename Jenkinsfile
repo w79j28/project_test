@@ -4,7 +4,7 @@ pipeline {
    
     stages {
         stage('Start') {
-	    when {  }
+	    
 	    when { anyOf { branch 'master'; changeRequest target: 'master' } }	
             steps {
 	        echo "BRANCH_NAME:${BRANCH_NAME}"
