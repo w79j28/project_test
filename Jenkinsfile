@@ -2,7 +2,7 @@ properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any
     triggers {
-	  githubPullRequests events: [Open()], spec: '', triggerMode: 'HEAVY_HOOKS'
+	githubPullRequests abortRunning: false, cancelQueued: false, events: [Open()], preStatus: false, skipFirstRun: false, spec: '', triggerMode: 'HEAVY_HOOKS'
     }
     stages {
         stage('Start') {
