@@ -4,19 +4,33 @@ pipeline {
    
     stages {
 		    
-        stage('Start') {
-	    when { anyOf { branch 'master'; changeRequest target: 'master' } }
-            steps {
-		
-	        echo "BRANCH_NAME:${BRANCH_NAME}"
-		    /*please specify repo, credentialsId, account and sha valuesSUCCESS*/
-                //githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_github_user_password', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
-                setBuildStatus('jenkins:build', 'building','PENDING')
-		setBuildStatus('jenkins:codecov','codecov','PENDING')
-		sleep 10
-		setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')
-	    }
+        stage('do pr check') {
+	    when { changeRequest target: 'master' }
+	    stages {
+               stage('pr ') {
+                   steps {
+                       echo "pr ~!!!!!!!!!!!!!!!!"
+		       setBuildStatus('jenkins:build', 'building','PENDING')
+		       setBuildStatus('jenkins:codecov','codecov','PENDING')
+		       sleep 10
+		       setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')	   
+                   }
+               }
+            }
+
         }
+	stage('master deploy') {
+	    when {  branch 'master' }
+	    stages {
+               stage('deploy ') {
+                   steps {
+                       echo "deploy~!!!!!!!!!!!!!!!!"
+		       
+                   }
+               }
+            }
+
+        }    
     }
 }	
 
