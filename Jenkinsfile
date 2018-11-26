@@ -3,10 +3,11 @@ pipeline {
     agent any
    
     stages {
+		    
         stage('Start') {
-	    
-	    when { anyOf { branch 'master'; changeRequest target: 'master' } }	
+	    when { anyOf { branch 'master'; changeRequest target: 'master' } }
             steps {
+		
 	        echo "BRANCH_NAME:${BRANCH_NAME}"
 		    /*please specify repo, credentialsId, account and sha valuesSUCCESS*/
                 //githubNotify description: 'my desc',  repo: getRepoURL(), credentialsId:'w79j28_github_user_password', account: 'w79j28', sha: getCommitSha(),  status: 'PENDING'
