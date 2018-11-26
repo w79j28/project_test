@@ -3,9 +3,8 @@ pipeline {
     agent any
    
     stages {
+	when { anyOf { branch 'master'; changeRequest target: 'master' } }	    
         stage('Start') {
-	    
-	    when { anyOf { branch 'master'; changeRequest target: 'master' } }	
             steps {
 	        echo "BRANCH_NAME:${BRANCH_NAME}"
 		    /*please specify repo, credentialsId, account and sha valuesSUCCESS*/
