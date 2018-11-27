@@ -1,7 +1,9 @@
 //properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any
-   
+    options {
+        disableConcurrentBuilds()
+    }
     stages {
 		    
         stage('do pr check') {
@@ -24,6 +26,8 @@ pipeline {
 	    stages {
                stage('deploy ') {
                    steps {
+		       echo "deploying......"
+		       sleep 30
                        echo "deploy~!!!!!!!!!!!!!!!!"
 		       
                    }
