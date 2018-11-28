@@ -29,6 +29,7 @@ pipeline {
 		       sleep 2
                        echo "deploy~!!!!!!!!!!!!!!!!"
 		       setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')
+		       setBuildStatus('jenkins:build2', '!','SUCCESS')
                    }
                }
             }
