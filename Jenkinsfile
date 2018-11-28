@@ -2,9 +2,9 @@
 
 pipeline {
     agent any
-    /*options {
+    options {
         disableConcurrentBuilds()
-    }*/
+    }
     stages {
 		    
         stage('do pr check') {
