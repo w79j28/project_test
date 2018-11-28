@@ -5,7 +5,6 @@ pipeline {
         disableConcurrentBuilds()
     }
     stages {
-		    
         stage('do pr check') {
 	    when { changeRequest target: 'master' }
 	    stages {
