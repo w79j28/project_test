@@ -34,6 +34,7 @@ pipeline {
                        echo "deploy~!!!!!!!!!!!!!!!!"
 		       setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')
 		       setBuildStatus('jenkins:build2', '!','SUCCESS')
+		       sh "ENV: ${CC_ENV}"	   
                    }
                }
             }
