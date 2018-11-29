@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
 	
-	    CC_ENV = "clang-${env.BUILD_ID}"
+	    CC_ENV = 'clang-${env.BUILD_ID}'
     }	
     stages {
         stage('do pr check') {
