@@ -30,10 +30,12 @@ pipeline {
                stage('deploy ') {
                    steps {
 		       echo "deploying......"
-		       sleep 2
+		       setBuildStatus('jenkins:codecov','codecov','PENDING')
+		       sleep 5
                        echo "deploy~!!!!!!!!!!!!!!!!"
 		       setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')
 		       setBuildStatus('jenkins:build2', '!','SUCCESS')
+		       setBuildStatus('jenkins:codecov','codecov','SUCCESS')
 		       sh "echo ENV: ${CC_ENV}"	   
                    }
                }
