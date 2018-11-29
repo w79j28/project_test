@@ -4,8 +4,9 @@ pipeline {
     options {
         disableConcurrentBuilds()
     }
-    environment { 
-        CC_ENV = 'clang'
+    environment {
+	
+	    CC_ENV = "clang-${env.BUILD_ID}"
     }	
     stages {
         stage('do pr check') {
