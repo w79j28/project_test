@@ -18,7 +18,6 @@ pipeline {
 		       setBuildStatus('jenkins:build', 'building','PENDING')
 		       setBuildStatus('jenkins:codecov','codecov','PENDING')
 		       sleep 10
-			   sh "ENV: ${CC_ENV}"
 		       setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')	   
                    }
                }
@@ -35,7 +34,7 @@ pipeline {
                        echo "deploy~!!!!!!!!!!!!!!!!"
 		       setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')
 		       setBuildStatus('jenkins:build2', '!','SUCCESS')
-		       sh "ENV: ${CC_ENV}"	   
+		       sh "echo ENV: ${CC_ENV}"	   
                    }
                }
             }
