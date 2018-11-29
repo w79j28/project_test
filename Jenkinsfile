@@ -4,6 +4,9 @@ pipeline {
     options {
         disableConcurrentBuilds()
     }
+    environment { 
+        CC_ENV = 'clang'
+    }	
     stages {
         stage('do pr check') {
 	    when { changeRequest target: 'master' }
@@ -14,6 +17,7 @@ pipeline {
 		       setBuildStatus('jenkins:build', 'building','PENDING')
 		       setBuildStatus('jenkins:codecov','codecov','PENDING')
 		       sleep 10
+			   sh "ENV: ${CC_ENV}"
 		       setBuildStatus('jenkins:build', 'Your tests passed on CircleCI!','SUCCESS')	   
                    }
                }
