@@ -48,19 +48,7 @@ def getCommitSha() {
   return readFile(".git/current-commit").trim()
 }
  
-def updateGithubCommitStatus(String message, String state) {
-  // workaround https://issues.jenkins-ci.org/browse/JENKINS-38674
-  repoUrl = getRepoURL()
-  commitSha = getCommitSha()
- 
-  step([
-	$class: 'GitHubCommitStatusSetter',
-	reposSource: [$class: "ManuallyEnteredRepositorySource", url: repoUrl],
-	commitShaSource: [$class: "ManuallyEnteredShaSource", sha: commitSha],
-	errorHandlers: [[$class: 'ShallowAnyErrorHandler']],
-	statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
-  ])
-}
+
 void setBuildStatus(String title, String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
